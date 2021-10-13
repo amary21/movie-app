@@ -1,41 +1,68 @@
 package com.amarydev.movieapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.amarydev.movieapp.R
+import androidx.recyclerview.widget.GridLayoutManager
 import com.amarydev.movieapp.databinding.FragmentHomeBinding
+import com.amarydev.movieapp.di.ViewModelFactory
+import com.amarydev.movieapp.ui.detail.DetailActivity
+import com.amarydev.movieapp.utils.Adapter
+import com.amarydev.movieapp.utils.Constant.DETAIL_KEY
+import com.amarydev.movieapp.utils.Resource
 
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
+    ): View {
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val homeAdapter = Adapter()
+        homeAdapter.onItemClick = {
+            val intent = Intent(activity, DetailActivity::class.java)
+            intent.putExtra(DETAIL_KEY, it)
+            startActivity(intent)
+        }
+
+        homeViewModel.movies.observe(viewLifecycleOwner, {
+            when(it){
+                is Resource.Loading -> {
+                    Log.e("HomeFragment", "loading")
+                }
+                is Resource.Success -> {
+                    it.data?.let { movies -> homeAdapter.setData(movies) }
+                }
+                is Resource.Error -> {
+
+                    Log.e("HomeFragment", it.message.toString())
+                }
+            }
         })
-        return root
+
+        with(binding.rvHome) {
+            layoutManager = GridLayoutManager(context, 2)
+            setHasFixedSize(true)
+            adapter = homeAdapter
+        }
     }
 
     override fun onDestroyView() {
