@@ -1,6 +1,7 @@
 package com.amarydev.movieapp.data.source.remote.response
 
 import com.amarydev.movieapp.data.model.Movie
+import com.amarydev.movieapp.data.source.local.entity.MovieEntity
 import com.google.gson.annotations.SerializedName
 
 data class ResultResponse(
@@ -19,7 +20,19 @@ fun ResultResponse.mapToModel() : Movie = Movie(
     title,
     posterPath,
     backdropPath,
-    releaseDate
+    releaseDate,
+    false
 )
 
 fun List<ResultResponse>.mapToModel() : List<Movie> = map { it.mapToModel() }
+
+fun ResultResponse.mapToEntity() : MovieEntity = MovieEntity(
+    id,
+    voteAverage,
+    title,
+    posterPath,
+    backdropPath,
+    releaseDate
+)
+
+fun List<ResultResponse>.mapToEntity() : List<MovieEntity> = map { it.mapToEntity() }

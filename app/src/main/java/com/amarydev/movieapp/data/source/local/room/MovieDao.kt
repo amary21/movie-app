@@ -9,9 +9,15 @@ interface MovieDao {
     @Query("SELECT * FROM movie")
     fun getAllMovies(): Flow<List<MovieEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun setFavorite(movieEntity: MovieEntity)
+    @Query("SELECT * FROM movie where is_favorite = 1")
+    fun getFavoriteMovie(): Flow<List<MovieEntity>>
 
-    @Delete
-    suspend fun unsetFavorite(movieEntity: MovieEntity)
+    @Query("SELECT EXISTS (SELECT * FROM movie WHERE id=:id AND is_favorite=1)")
+    fun isFavorite(id: Int): Flow<Int>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovies(movies: List<MovieEntity>)
+
+    @Update
+    fun updateFavoriteMovie(movie: MovieEntity)
 }

@@ -1,9 +1,10 @@
-package com.amarydev.movieapp.di
+package com.amarydev.movieapp.utils
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.amarydev.movieapp.data.IRepository
+import com.amarydev.movieapp.di.Injection
 import com.amarydev.movieapp.ui.detail.DetailViewModel
 import com.amarydev.movieapp.ui.favorite.FavoriteViewModel
 import com.amarydev.movieapp.ui.home.HomeViewModel

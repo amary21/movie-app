@@ -3,15 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.2989583333333333" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2989583333333333" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3779487179487179" />
         <entry key="app/src/main/res/drawable/shape_toolbar.xml" value="0.32685185185185184" />
         <entry key="app/src/main/res/drawable/shape_toolbar_dark.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.2362784471218206" />
         <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.27578125" />
-        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.353125" />
+        <entry key="app/src/main/res/layout/error_notfound.xml" value="0.3496376811594203" />
         <entry key="app/src/main/res/layout/favorite_fragment.xml" value="0.2828125" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.36770833333333336" />

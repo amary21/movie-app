@@ -6,19 +6,21 @@ import com.amarydev.movieapp.data.model.mapToEntity
 import com.amarydev.movieapp.data.source.local.LocalDataSource
 import com.amarydev.movieapp.data.source.local.entity.mapToModel
 import com.amarydev.movieapp.data.source.remote.RemoteDataSource
+import com.amarydev.movieapp.data.source.remote.response.ResultResponse
+import com.amarydev.movieapp.data.source.remote.response.mapToEntity
 import com.amarydev.movieapp.data.source.remote.response.mapToModel
 import com.amarydev.movieapp.utils.ApiResponse
+import com.amarydev.movieapp.utils.NetworkBoundResource
 import com.amarydev.movieapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import java.lang.Exception
+import kotlinx.coroutines.flow.*
+import java.util.concurrent.Executor
 
 class Repository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource) : IRepository {
+
+    private lateinit var diskIO: Executor
 
     companion object {
         @Volatile
@@ -33,16 +35,25 @@ class Repository(
             }
     }
 
-    override fun getAllMovie(): Flow<Resource<List<Movie>>> {
-        return flow {
-            emit(Resource.Loading())
-            when(val result = remoteDataSource.getAllMovies().first()){
-                is ApiResponse.Success -> emit(Resource.Success(result.data.mapToModel()))
-                is ApiResponse.Error -> emit(Resource.Error<List<Movie>>(result.errorMessage))
-                is ApiResponse.Empty -> emit(Resource.Error<List<Movie>>("data empty"))
+    override fun getAllMovie(): Flow<Resource<List<Movie>>> =
+        object : NetworkBoundResource<List<Movie>, List<ResultResponse>>() {
+            override fun loadFromDB() =
+                localDataSource.getAllMovies().map {
+                    it.mapToModel()
+                }
+
+            override fun shouldFetch(data: List<Movie>?) =
+                data == null || data.isEmpty()
+
+            override suspend fun createCall() =
+                remoteDataSource.getAllMovies()
+
+
+            override suspend fun saveCallResult(data: List<ResultResponse>) {
+                localDataSource.insertMovie(data.mapToEntity())
             }
-        }.flowOn(Dispatchers.IO)
-    }
+
+        }.asFlow()
 
     override fun getAllFavoriteMovie(): Flow<Resource<List<Movie>>> {
         return flow {
@@ -71,12 +82,12 @@ class Repository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun setFavorite(movie: Movie): Flow<Resource<Boolean>> {
-        TODO("Not yet implemented")
+    override fun setFavorite(movie: Movie, state: Boolean){
+        diskIO.execute { localDataSource.setFavoriteMovie(movie.mapToEntity(), state) }
     }
 
-    override fun unsetFavorite(movie: Movie): Flow<Resource<Boolean>> {
-        TODO("Not yet implemented")
+    override fun isFavorite(id: Int): Flow<Int> {
+        return localDataSource.isFavorite(id)
     }
 
 

@@ -31,12 +31,12 @@ class RemoteDataSource (private val apiService: ApiService){
                 else
                     emit(ApiResponse.Empty)
             }catch (e: Exception){
-//                emit(ApiResponse.Error(e.toString()))
+                emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getDetailMovie(id : Int) : Flow<ApiResponse<DetailResponse>>{
+    fun getDetailMovie(id : Int) : Flow<ApiResponse<DetailResponse>>{
         return flow {
             try {
                 val response = apiService.getDetailMovie(movie_id = id)

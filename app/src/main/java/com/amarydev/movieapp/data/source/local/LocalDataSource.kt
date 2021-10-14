@@ -15,7 +15,14 @@ class LocalDataSource(private val movieDao: MovieDao) {
 
     fun getAllMovies() = movieDao.getAllMovies()
 
-    suspend fun setFavorite(movieEntity: MovieEntity) = movieDao.setFavorite(movieEntity)
+    fun getFavoriteMovie() = movieDao.getFavoriteMovie()
 
-    suspend fun unsetFavorite(movieEntity: MovieEntity) = movieDao.unsetFavorite(movieEntity)
+    fun isFavorite(id: Int) = movieDao.isFavorite(id)
+
+    suspend fun insertMovie(movies: List<MovieEntity>) = movieDao.insertMovies(movies)
+
+    fun setFavoriteMovie(movie: MovieEntity, newState: Boolean){
+        movie.isFavorite = newState
+        movieDao.updateFavoriteMovie(movie)
+    }
 }

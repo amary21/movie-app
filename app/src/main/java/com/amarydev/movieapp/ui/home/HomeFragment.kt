@@ -2,7 +2,6 @@ package com.amarydev.movieapp.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amarydev.movieapp.databinding.FragmentHomeBinding
-import com.amarydev.movieapp.di.ViewModelFactory
 import com.amarydev.movieapp.ui.detail.DetailActivity
 import com.amarydev.movieapp.utils.Adapter
 import com.amarydev.movieapp.utils.Constant.DETAIL_KEY
 import com.amarydev.movieapp.utils.Resource
+import com.amarydev.movieapp.utils.ViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -46,14 +45,21 @@ class HomeFragment : Fragment() {
         homeViewModel.movies.observe(viewLifecycleOwner, {
             when(it){
                 is Resource.Loading -> {
-                    Log.e("HomeFragment", "loading")
+                    binding.pbLoading.visibility = View.VISIBLE
+                    binding.errorNotFound.root.visibility = View.GONE
+                    binding.rvHome.visibility = View.GONE
                 }
                 is Resource.Success -> {
+                    binding.pbLoading.visibility = View.GONE
+                    binding.errorNotFound.root.visibility = View.GONE
+                    binding.rvHome.visibility = View.VISIBLE
+
                     it.data?.let { movies -> homeAdapter.setData(movies) }
                 }
                 is Resource.Error -> {
-
-                    Log.e("HomeFragment", it.message.toString())
+                    binding.pbLoading.visibility = View.GONE
+                    binding.errorNotFound.root.visibility = View.VISIBLE
+                    binding.rvHome.visibility = View.GONE
                 }
             }
         })

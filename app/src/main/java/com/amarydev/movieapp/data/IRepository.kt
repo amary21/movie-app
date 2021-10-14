@@ -9,6 +9,6 @@ interface IRepository {
     fun getAllMovie(): Flow<Resource<List<Movie>>>
     fun getAllFavoriteMovie(): Flow<Resource<List<Movie>>>
     fun getDetailMovie(id: Int) : Flow<Resource<Detail>>
-    fun setFavorite(movie: Movie) : Flow<Resource<Boolean>>
-    fun unsetFavorite(movie: Movie) : Flow<Resource<Boolean>>
+    fun setFavorite(movie: Movie, state: Boolean)
+    fun isFavorite(id: Int) : Flow<Int>
 }
