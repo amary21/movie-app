@@ -15,12 +15,14 @@ import com.amarydev.movieapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class Repository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource) : IRepository {
 
-    private lateinit var diskIO: Executor
+    private val diskIO: Executor =
+        Executors.newSingleThreadExecutor()
 
     companion object {
         @Volatile
@@ -59,7 +61,7 @@ class Repository(
         return flow {
             try {
                 emit(Resource.Loading())
-                val result = localDataSource.getAllMovies().first()
+                val result = localDataSource.getFavoriteMovie().first()
                 if (result.isNotEmpty()){
                     emit(Resource.Success(result.mapToModel()))
                 } else {

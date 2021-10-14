@@ -32,9 +32,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
-        android:id="@+id/error_not_found"
+        android:id="@+id/errorNotFound"
         android:visibility="gone"
-        layout="@layout/error_notfound"/>
+        layout="@layout/error_not_found"/>
 
     <ProgressBar
         android:id="@+id/pb_loading"
@@ -185,11 +185,11 @@
 
 
                     <TextView
-                        android:id="@+id/info_prodcution"
+                        android:id="@+id/info_production"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@string/prodcution"
+                        android:text="@string/production"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                         android:textSize="14sp"
                         android:textStyle="normal"
@@ -206,8 +206,8 @@
                         android:textSize="14sp"
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/info_prodcution"
-                        app:layout_constraintTop_toTopOf="@+id/info_prodcution" />
+                        app:layout_constraintStart_toEndOf="@+id/info_production"
+                        app:layout_constraintTop_toTopOf="@+id/info_production" />
 
                     <TextView
                         android:id="@+id/info_homepage"
@@ -263,7 +263,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/info_overview">
 
                 <TextView
-                    android:id="@+id/tv_overview"
+                    android:id="@+id/tvOverview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"

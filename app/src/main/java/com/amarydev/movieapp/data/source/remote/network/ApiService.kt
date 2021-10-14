@@ -19,5 +19,5 @@ interface ApiService {
         @Path("movie_id") movie_id: Int,
         @Query("api_key") api_key: String? = API_KEY,
         @Query("language") language: String? = "en-US"
-    ): DetailResponse
+    ): DetailResponse?
 }

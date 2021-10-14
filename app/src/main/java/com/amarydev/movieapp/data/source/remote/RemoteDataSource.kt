@@ -1,10 +1,9 @@
 package com.amarydev.movieapp.data.source.remote
 
-import android.util.Log
-import com.amarydev.movieapp.utils.ApiResponse
 import com.amarydev.movieapp.data.source.remote.network.ApiService
 import com.amarydev.movieapp.data.source.remote.response.DetailResponse
 import com.amarydev.movieapp.data.source.remote.response.ResultResponse
+import com.amarydev.movieapp.utils.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -46,7 +45,7 @@ class RemoteDataSource (private val apiService: ApiService){
                     emit(ApiResponse.Empty)
                 }
             } catch (e : Exception){
-//                emit(ApiResponse.Error(e.toString()))
+                //emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }

@@ -1,7 +1,6 @@
 package com.amarydev.movieapp.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -14,10 +13,10 @@ import com.amarydev.movieapp.data.model.Movie
 import com.amarydev.movieapp.data.model.Production
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
 import com.amarydev.movieapp.utils.Constant
-import com.amarydev.movieapp.utils.Constant.DETAIL_KEY
 import com.amarydev.movieapp.utils.Resource
 import com.amarydev.movieapp.utils.ViewModelFactory
 import com.bumptech.glide.Glide
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -28,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        movie = intent.getParcelableExtra(DETAIL_KEY)
+        movie = DetailActivityArgs.fromBundle(intent.extras as Bundle).movie
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -89,7 +88,6 @@ class DetailActivity : AppCompatActivity() {
     private fun onViewFavorite() {
         movie?.id?.let { id ->
             detailViewModel.isFavorite(id).observe(this, {
-                Log.e("onViewFavorite: ", it.toString())
                 var isFavorite = it == 1
                 setStatusFavorite(isFavorite)
 
@@ -97,6 +95,9 @@ class DetailActivity : AppCompatActivity() {
                     isFavorite = !isFavorite
                     detailViewModel.setFavorite(movie!!, isFavorite)
                     setStatusFavorite(isFavorite)
+
+                    val message = if (isFavorite) "Success to add favorite" else "Success to remove favorite"
+                    FancyToast.makeText(this, message, FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show()
                 }
             })
         }
@@ -147,6 +148,7 @@ class DetailActivity : AppCompatActivity() {
                     R.drawable.ic_baseline_favorite_border_24
                 )
             )
+
         }
     }
 

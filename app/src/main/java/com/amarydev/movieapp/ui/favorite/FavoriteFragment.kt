@@ -1,32 +1,78 @@
 package com.amarydev.movieapp.ui.favorite
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.amarydev.movieapp.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.amarydev.movieapp.databinding.FragmentFavoriteBinding
+import com.amarydev.movieapp.utils.Adapter
+import com.amarydev.movieapp.utils.Resource
+import com.amarydev.movieapp.utils.ViewModelFactory
 
 class FavoriteFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FavoriteFragment()
-    }
-
     private lateinit var viewModel: FavoriteViewModel
+    private var _binding: FragmentFavoriteBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    ): View {
+        val factory = ViewModelFactory.getInstance(requireActivity())
+        viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
+        _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val favoriteAdapter = Adapter()
+        favoriteAdapter.onItemClick = {
+            val detailActivity = FavoriteFragmentDirections.actionNavigationFavoriteToDetailActivity(it)
+            view.findNavController().navigate(detailActivity)
+        }
+
+        viewModel.movies.observe(viewLifecycleOwner, {
+            when(it){
+                is Resource.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                    binding.errorNotFound.root.visibility = View.GONE
+                    binding.rvFavorite.visibility = View.GONE
+                }
+                is Resource.Success -> {
+                    Log.e("onViewCreated: ", it.data.toString() )
+                    binding.pbLoading.visibility = View.GONE
+                    binding.errorNotFound.root.visibility = View.GONE
+                    binding.rvFavorite.visibility = View.VISIBLE
+
+                    it.data?.let { movies -> favoriteAdapter.setData(movies) }
+                }
+                is Resource.Error -> {
+                    binding.pbLoading.visibility = View.GONE
+                    binding.errorNotFound.root.visibility = View.VISIBLE
+                    binding.rvFavorite.visibility = View.GONE
+                }
+            }
+        })
+
+        with(binding.rvFavorite) {
+            layoutManager = GridLayoutManager(context, 2)
+            setHasFixedSize(true)
+            adapter = favoriteAdapter
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

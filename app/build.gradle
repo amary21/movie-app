@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -64,4 +65,7 @@ dependencies {
 
     //glide
     implementation "com.github.bumptech.glide:glide:4.11.0"
+
+    //toast
+    implementation 'io.github.shashank02051997:FancyToast:2.0.1'
 }

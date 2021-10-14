@@ -29,6 +29,6 @@
     <include
         android:id="@+id/error_not_found"
         android:visibility="gone"
-        layout="@layout/error_notfound"/>
+        layout="@layout/error_not_found"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

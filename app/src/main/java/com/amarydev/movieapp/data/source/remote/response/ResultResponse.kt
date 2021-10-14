@@ -24,8 +24,6 @@ fun ResultResponse.mapToModel() : Movie = Movie(
     false
 )
 
-fun List<ResultResponse>.mapToModel() : List<Movie> = map { it.mapToModel() }
-
 fun ResultResponse.mapToEntity() : MovieEntity = MovieEntity(
     id,
     voteAverage,
