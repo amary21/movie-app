@@ -74,7 +74,7 @@
                     android:id="@+id/img_poster"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@color/cardview_dark_background"
+                    android:src="@android:color/darker_gray"
                     android:contentDescription="@string/image_poster" />
 
             </androidx.cardview.widget.CardView>
