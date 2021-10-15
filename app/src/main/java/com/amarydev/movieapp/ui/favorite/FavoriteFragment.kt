@@ -1,22 +1,24 @@
 package com.amarydev.movieapp.ui.favorite
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.GenericLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amarydev.movieapp.databinding.FragmentFavoriteBinding
 import com.amarydev.movieapp.utils.Adapter
 import com.amarydev.movieapp.utils.Resource
-import com.amarydev.movieapp.utils.ViewModelFactory
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : Fragment() {
 
-    private lateinit var viewModel: FavoriteViewModel
+    private val viewModel: FavoriteViewModel by viewModel()
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
@@ -24,8 +26,6 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val factory = ViewModelFactory.getInstance(requireActivity())
-        viewModel = ViewModelProvider(this, factory)[FavoriteViewModel::class.java]
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,7 +47,6 @@ class FavoriteFragment : Fragment() {
                     binding.rvFavorite.visibility = View.GONE
                 }
                 is Resource.Success -> {
-                    Log.e("onViewCreated: ", it.data.toString() )
                     binding.pbLoading.visibility = View.GONE
                     binding.errorNotFound.root.visibility = View.GONE
                     binding.rvFavorite.visibility = View.VISIBLE
@@ -74,5 +73,4 @@ class FavoriteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

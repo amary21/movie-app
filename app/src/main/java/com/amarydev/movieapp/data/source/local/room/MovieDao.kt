@@ -19,5 +19,5 @@ interface MovieDao {
     suspend fun insertMovies(movies: List<MovieEntity>)
 
     @Update
-    fun updateFavoriteMovie(movie: MovieEntity)
+    suspend fun updateFavoriteMovie(movie: MovieEntity)
 }

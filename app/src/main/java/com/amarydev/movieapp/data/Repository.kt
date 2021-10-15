@@ -1,5 +1,6 @@
 package com.amarydev.movieapp.data
 
+import android.content.Context
 import com.amarydev.movieapp.data.model.Detail
 import com.amarydev.movieapp.data.model.Movie
 import com.amarydev.movieapp.data.model.mapToEntity
@@ -10,6 +11,7 @@ import com.amarydev.movieapp.data.source.remote.response.ResultResponse
 import com.amarydev.movieapp.data.source.remote.response.mapToEntity
 import com.amarydev.movieapp.data.source.remote.response.mapToModel
 import com.amarydev.movieapp.utils.ApiResponse
+import com.amarydev.movieapp.utils.ConnectionCheck
 import com.amarydev.movieapp.utils.NetworkBoundResource
 import com.amarydev.movieapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -19,23 +21,8 @@ import java.util.concurrent.Executors
 
 class Repository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource) : IRepository {
-
-    private val diskIO: Executor =
-        Executors.newSingleThreadExecutor()
-
-    companion object {
-        @Volatile
-        private var instance: Repository? = null
-
-        fun getInstance(
-            remoteDataSource: RemoteDataSource,
-            localDataSource: LocalDataSource
-        ): Repository =
-            instance ?: synchronized(this) {
-                instance ?: Repository(remoteDataSource, localDataSource)
-            }
-    }
+    private val localDataSource: LocalDataSource,
+    private val context: Context ) : IRepository {
 
     override fun getAllMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<ResultResponse>>() {
@@ -45,7 +32,7 @@ class Repository(
                 }
 
             override fun shouldFetch(data: List<Movie>?) =
-                data == null || data.isEmpty()
+                ConnectionCheck.isNetworkAvailable(context)
 
             override suspend fun createCall() =
                 remoteDataSource.getAllMovies()
@@ -73,7 +60,7 @@ class Repository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun getDetailMovie(id: Int): Flow<Resource<Detail>> {
+    override suspend fun getDetailMovie(id: Int): Flow<Resource<Detail>> {
         return flow {
             emit(Resource.Loading())
             when(val result = remoteDataSource.getDetailMovie(id).first()){
@@ -84,9 +71,8 @@ class Repository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override fun setFavorite(movie: Movie, state: Boolean){
-        diskIO.execute { localDataSource.setFavoriteMovie(movie.mapToEntity(), state) }
-    }
+    override suspend fun setFavorite(movie: Movie, state: Boolean) =
+        localDataSource.setFavoriteMovie(movie.mapToEntity(), state)
 
     override fun isFavorite(id: Int): Flow<Int> {
         return localDataSource.isFavorite(id)

@@ -13,4 +13,5 @@
     <string name="overview">Overview</string>
     <string name="button_favorite">button favorite</string>
     <string name="image_not_found">image not found</string>
+    <string name="data_not_found">Data Not Found</string>
 </resources>

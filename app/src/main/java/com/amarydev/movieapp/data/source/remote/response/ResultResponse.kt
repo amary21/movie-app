@@ -1,6 +1,5 @@
 package com.amarydev.movieapp.data.source.remote.response
 
-import com.amarydev.movieapp.data.model.Movie
 import com.amarydev.movieapp.data.source.local.entity.MovieEntity
 import com.google.gson.annotations.SerializedName
 
@@ -13,16 +12,6 @@ data class ResultResponse(
     @SerializedName("release_date") val releaseDate: String
 )
 
-
-fun ResultResponse.mapToModel() : Movie = Movie(
-    id,
-    voteAverage,
-    title,
-    posterPath,
-    backdropPath,
-    releaseDate,
-    false
-)
 
 fun ResultResponse.mapToEntity() : MovieEntity = MovieEntity(
     id,

@@ -68,4 +68,9 @@ dependencies {
 
     //toast
     implementation 'io.github.shashank02051997:FancyToast:2.0.1'
+
+    //koin
+    implementation "org.koin:koin-core:2.1.6"
+    implementation "org.koin:koin-android:2.1.6"
+    implementation "org.koin:koin-android-viewmodel:2.1.6"
 }

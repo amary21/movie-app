@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.amarydev.movieapp.R
 import com.amarydev.movieapp.data.model.Genre
 import com.amarydev.movieapp.data.model.Movie
@@ -14,14 +13,14 @@ import com.amarydev.movieapp.data.model.Production
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
 import com.amarydev.movieapp.utils.Constant
 import com.amarydev.movieapp.utils.Resource
-import com.amarydev.movieapp.utils.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityDetailBinding
     private var movie: Movie? = null
 
@@ -31,8 +30,6 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val factory = ViewModelFactory.getInstance(this)
-        detailViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
         onViewActionBar()
         onViewCreate()

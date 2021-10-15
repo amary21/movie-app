@@ -10,15 +10,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class RemoteDataSource (private val apiService: ApiService){
-    companion object{
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(service: ApiService): RemoteDataSource =
-            instance ?: synchronized(this){
-                instance ?: RemoteDataSource(service)
-            }
-    }
 
     suspend fun getAllMovies(): Flow<ApiResponse<List<ResultResponse>>> {
         return flow {
@@ -35,7 +26,7 @@ class RemoteDataSource (private val apiService: ApiService){
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getDetailMovie(id : Int) : Flow<ApiResponse<DetailResponse>>{
+    suspend fun getDetailMovie(id : Int) : Flow<ApiResponse<DetailResponse>>{
         return flow {
             try {
                 val response = apiService.getDetailMovie(movie_id = id)
@@ -45,7 +36,9 @@ class RemoteDataSource (private val apiService: ApiService){
                     emit(ApiResponse.Empty)
                 }
             } catch (e : Exception){
-                //emit(ApiResponse.Error(e.toString()))
+                emit(ApiResponse.Error(e.message.toString()))
+            } finally {
+
             }
         }.flowOn(Dispatchers.IO)
     }
