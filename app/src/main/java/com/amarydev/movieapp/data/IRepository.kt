@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface IRepository {
     fun getAllMovie(): Flow<Resource<List<Movie>>>
     fun getAllFavoriteMovie(): Flow<Resource<List<Movie>>>
-    suspend fun getDetailMovie(id: Int) : Flow<Resource<Detail>>
+    fun getDetailMovie(id: Int) : Flow<Resource<Detail>>
     suspend fun setFavorite(movie: Movie, state: Boolean)
     fun isFavorite(id: Int) : Flow<Int>
 }

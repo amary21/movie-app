@@ -16,8 +16,6 @@ import com.amarydev.movieapp.utils.NetworkBoundResource
 import com.amarydev.movieapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class Repository(
     private val remoteDataSource: RemoteDataSource,
@@ -60,7 +58,7 @@ class Repository(
         }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun getDetailMovie(id: Int): Flow<Resource<Detail>> {
+    override fun getDetailMovie(id: Int): Flow<Resource<Detail>> {
         return flow {
             emit(Resource.Loading())
             when(val result = remoteDataSource.getDetailMovie(id).first()){
@@ -68,7 +66,7 @@ class Repository(
                 is ApiResponse.Error -> emit(Resource.Error<Detail>(result.errorMessage))
                 is ApiResponse.Empty -> emit(Resource.Error<Detail>("data empty"))
             }
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
     override suspend fun setFavorite(movie: Movie, state: Boolean) =
