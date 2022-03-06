@@ -1,6 +1,5 @@
 package com.amarydev.movieapp.data
 
-import android.content.Context
 import com.amarydev.movieapp.data.model.Detail
 import com.amarydev.movieapp.data.model.Movie
 import com.amarydev.movieapp.data.model.Tv
@@ -13,7 +12,6 @@ import com.amarydev.movieapp.data.source.remote.response.ResultTvResponse
 import com.amarydev.movieapp.data.source.remote.response.mapToEntity
 import com.amarydev.movieapp.data.source.remote.response.mapToModel
 import com.amarydev.movieapp.utils.ApiResponse
-import com.amarydev.movieapp.utils.ConnectionCheck
 import com.amarydev.movieapp.utils.NetworkBoundResource
 import com.amarydev.movieapp.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -21,8 +19,8 @@ import kotlinx.coroutines.flow.*
 
 class Repository(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
-    private val context: Context ) : IRepository {
+    private val localDataSource: LocalDataSource
+) : IRepository {
 
     override fun getAllMovie(): Flow<Resource<List<Movie>>> =
         object : NetworkBoundResource<List<Movie>, List<ResultResponse>>() {

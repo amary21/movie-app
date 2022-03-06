@@ -56,7 +56,7 @@ val databaseModule = module {
 val repositoryModule = module {
     single { RemoteDataSource(get()) }
     single { LocalDataSource(get(), get()) }
-    factory<IRepository> { Repository(get(), get(), androidContext()) }
+    factory<IRepository> { Repository(get(), get()) }
 }
 
 val viewModelModule = module {
