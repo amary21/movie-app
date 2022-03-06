@@ -9,7 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amarydev.movieapp.databinding.FragmentMovieBinding
 import com.amarydev.movieapp.utils.Adapter
-import com.amarydev.movieapp.utils.Resource
+import com.amarydev.movieapp.core.utils.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MovieFragment : Fragment() {

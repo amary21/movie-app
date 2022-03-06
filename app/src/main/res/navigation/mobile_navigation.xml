@@ -38,11 +38,11 @@
             app:argType="string" />
         <argument
             android:name="movie"
-            app:argType="com.amarydev.movieapp.data.model.Movie"
+            app:argType="com.amarydev.movieapp.domain.model.Movie"
             app:nullable="true" />
         <argument
             android:name="tv"
-            app:argType="com.amarydev.movieapp.data.model.Tv"
+            app:argType="com.amarydev.movieapp.domain.model.Tv"
             app:nullable="true" />
     </activity>
 

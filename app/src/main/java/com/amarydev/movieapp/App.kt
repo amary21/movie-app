@@ -1,9 +1,10 @@
 package com.amarydev.movieapp
 
 import android.app.Application
-import com.amarydev.movieapp.di.databaseModule
-import com.amarydev.movieapp.di.networkModule
-import com.amarydev.movieapp.di.repositoryModule
+import com.amarydev.movieapp.core.di.databaseModule
+import com.amarydev.movieapp.core.di.networkModule
+import com.amarydev.movieapp.core.di.repositoryModule
+import com.amarydev.movieapp.di.useCaseModule
 import com.amarydev.movieapp.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -23,6 +24,7 @@ class App : Application() {
                     networkModule,
                     databaseModule,
                     repositoryModule,
+                    useCaseModule,
                     viewModelModule
                 )
             )

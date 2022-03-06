@@ -1,0 +1,27 @@
+package com.amarydev.movieapp.core.data.source.remote.response
+
+import com.amarydev.movieapp.domain.model.Detail
+import com.google.gson.annotations.SerializedName
+
+data class DetailResponse(
+    @SerializedName("backdrop_path") var backdropPath: String,
+    @SerializedName("genres") var genres: List<GenreResponse>,
+    @SerializedName("homepage") var homepage: String,
+    @SerializedName("overview") var overview: String,
+    @SerializedName("poster_path") var posterPath: String,
+    @SerializedName("production_companies") var productionResponseCompanies: List<ProductionResponse>,
+    @SerializedName("release_date") var releaseDate: String? = null,
+    @SerializedName("first_air_date") var firstAirDate: String? = null,
+    @SerializedName("vote_average") var voteAverage: Double
+)
+
+fun DetailResponse.mapToModel() : Detail = Detail(
+    backdropPath,
+    genres.mapToModel(),
+    homepage,
+    overview,
+    posterPath,
+    productionResponseCompanies.mapToModel(),
+    releaseDate ?: firstAirDate ?: "",
+    voteAverage
+)
