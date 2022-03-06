@@ -10,7 +10,8 @@ data class DetailResponse(
     @SerializedName("overview") var overview: String,
     @SerializedName("poster_path") var posterPath: String,
     @SerializedName("production_companies") var productionResponseCompanies: List<ProductionResponse>,
-    @SerializedName("release_date") var releaseDate: String,
+    @SerializedName("release_date") var releaseDate: String? = null,
+    @SerializedName("first_air_date") var firstAirDate: String? = null,
     @SerializedName("vote_average") var voteAverage: Double
 )
 
@@ -21,6 +22,6 @@ fun DetailResponse.mapToModel() : Detail = Detail(
     overview,
     posterPath,
     productionResponseCompanies.mapToModel(),
-    releaseDate,
+    releaseDate ?: firstAirDate ?: "",
     voteAverage
 )

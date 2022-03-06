@@ -1,8 +1,10 @@
 package com.amarydev.movieapp.data.source.remote
 
+import android.util.Log
 import com.amarydev.movieapp.data.source.remote.network.ApiService
 import com.amarydev.movieapp.data.source.remote.response.DetailResponse
 import com.amarydev.movieapp.data.source.remote.response.ResultResponse
+import com.amarydev.movieapp.data.source.remote.response.ResultTvResponse
 import com.amarydev.movieapp.utils.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,10 +28,25 @@ class RemoteDataSource (private val apiService: ApiService){
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getDetailMovie(id : Int) : Flow<ApiResponse<DetailResponse>>{
+    suspend fun getAllTv(): Flow<ApiResponse<List<ResultTvResponse>>>{
         return flow {
             try {
-                val response = apiService.getDetailMovie(movie_id = id)
+                val response = apiService.getTvOnAir()
+                val data = response.results
+                if (data.isNotEmpty())
+                    emit(ApiResponse.Success(data))
+                else
+                    emit(ApiResponse.Empty)
+            }catch (e: Exception){
+                emit(ApiResponse.Error(e.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getDetail(type: String, id : Int) : Flow<ApiResponse<DetailResponse>>{
+        return flow {
+            try {
+                val response = apiService.getDetail(type, id)
                 if (response != null){
                     emit(ApiResponse.Success(response))
                 } else {

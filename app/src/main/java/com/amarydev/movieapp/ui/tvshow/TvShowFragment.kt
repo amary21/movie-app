@@ -1,4 +1,4 @@
-package com.amarydev.movieapp.ui.home
+package com.amarydev.movieapp.ui.tvshow
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,63 +7,63 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.amarydev.movieapp.databinding.FragmentHomeBinding
+import com.amarydev.movieapp.databinding.FragmentTvshowBinding
 import com.amarydev.movieapp.utils.Adapter
 import com.amarydev.movieapp.utils.Resource
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class TvShowFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by viewModel()
-    private var _binding: FragmentHomeBinding? = null
+    private val viewModel: TvShowViewModel by viewModel()
+    private var _binding: FragmentTvshowBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentTvshowBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val homeAdapter = Adapter()
-        homeAdapter.onItemClick = {
-            val detailActivity = HomeFragmentDirections.actionNavigationHomeToDetailActivity(it)
+        val favoriteAdapter = Adapter()
+        favoriteAdapter.onItemClickTv = {
+            val detailActivity = TvShowFragmentDirections.actionNavigationFavoriteToDetailActivity(it.id, "tv", it.name, null, it)
             view.findNavController().navigate(detailActivity)
         }
 
-        homeViewModel.movies.observe(viewLifecycleOwner, {
-            when(it){
+        viewModel.tv.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                     binding.errorNotFound.root.visibility = View.GONE
-                    binding.rvHome.visibility = View.GONE
+                    binding.rvFavorite.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     binding.pbLoading.visibility = View.GONE
                     binding.errorNotFound.root.visibility = View.GONE
-                    binding.rvHome.visibility = View.VISIBLE
+                    binding.rvFavorite.visibility = View.VISIBLE
 
-                    it.data?.let { movies -> homeAdapter.setData(movies) }
+                    it.data?.let { movies -> favoriteAdapter.setDataTv(movies) }
                 }
                 is Resource.Error -> {
                     binding.pbLoading.visibility = View.GONE
                     binding.errorNotFound.root.visibility = View.VISIBLE
-                    binding.rvHome.visibility = View.GONE
+                    binding.rvFavorite.visibility = View.GONE
                 }
             }
-        })
+        }
 
-        with(binding.rvHome) {
+        with(binding.rvFavorite) {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)
-            adapter = homeAdapter
+            adapter = favoriteAdapter
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

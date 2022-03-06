@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_movie"
         android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_favorite"
-        android:icon="@drawable/ic_favorite"
-        android:title="@string/title_favorite" />
+        android:id="@+id/navigation_tv"
+        android:icon="@drawable/ic_baseline_live_tv_24"
+        android:title="Tv" />
 
 </menu>

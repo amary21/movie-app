@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="12dp"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.movie.MovieFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_home"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_movie"
+        tools:listitem="@layout/item_list"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"/>
 

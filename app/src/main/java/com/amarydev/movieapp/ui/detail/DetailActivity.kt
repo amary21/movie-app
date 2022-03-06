@@ -10,6 +10,7 @@ import com.amarydev.movieapp.R
 import com.amarydev.movieapp.data.model.Genre
 import com.amarydev.movieapp.data.model.Movie
 import com.amarydev.movieapp.data.model.Production
+import com.amarydev.movieapp.data.model.Tv
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
 import com.amarydev.movieapp.utils.Constant
 import com.amarydev.movieapp.utils.Resource
@@ -22,11 +23,19 @@ class DetailActivity : AppCompatActivity() {
 
     private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityDetailBinding
+    private var id: Int? = null
+    private var type: String = ""
+    private var title: String = ""
     private var movie: Movie? = null
+    private var tv: Tv? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        id = DetailActivityArgs.fromBundle(intent.extras as Bundle).id
+        type = DetailActivityArgs.fromBundle(intent.extras as Bundle).type
+        title = DetailActivityArgs.fromBundle(intent.extras as Bundle).title
         movie = DetailActivityArgs.fromBundle(intent.extras as Bundle).movie
+        tv = DetailActivityArgs.fromBundle(intent.extras as Bundle).tv
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,12 +49,12 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.title = movie?.title
+        supportActionBar?.title = title
     }
 
     private fun onViewCreate(){
-        movie?.id?.let {
-            detailViewModel.movie(it).observe(this, { result ->
+        id?.let {
+            detailViewModel.detail(type, it).observe(this) { result ->
                 when (result) {
                     is Resource.Loading -> {
                         binding.pbLoading.visibility = View.VISIBLE
@@ -58,7 +67,7 @@ class DetailActivity : AppCompatActivity() {
                         binding.containerDetail.visibility = View.VISIBLE
 
                         val data = result.data
-                        with(binding){
+                        with(binding) {
                             Glide.with(this@DetailActivity)
                                 .load(Constant.COVER_IMAGE + data?.backdropPath)
                                 .into(imgPoster)
@@ -78,25 +87,32 @@ class DetailActivity : AppCompatActivity() {
                         binding.containerDetail.visibility = View.GONE
                     }
                 }
-            })
+            }
         }
     }
 
     private fun onViewFavorite() {
-        movie?.id?.let { id ->
-            detailViewModel.isFavorite(id).observe(this, {
+        id?.let { id ->
+            detailViewModel.isFavorite(id, type).observe(this) {
                 var isFavorite = it == 1
                 setStatusFavorite(isFavorite)
 
                 binding.fabFavorite.setOnClickListener {
                     isFavorite = !isFavorite
-                    detailViewModel.setFavorite(movie!!, isFavorite)
+                    detailViewModel.setFavorite(movie, tv, isFavorite)
                     setStatusFavorite(isFavorite)
 
-                    val message = if (isFavorite) "Success to add favorite" else "Success to remove favorite"
-                    FancyToast.makeText(this, message, FancyToast.LENGTH_SHORT, FancyToast.SUCCESS, false).show()
+                    val message =
+                        if (isFavorite) "Success to add favorite" else "Success to remove favorite"
+                    FancyToast.makeText(
+                        this,
+                        message,
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false
+                    ).show()
                 }
-            })
+            }
         }
     }
 
