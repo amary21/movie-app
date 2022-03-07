@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amarydev.domain.utils.Resource
 import com.amarydev.movieapp.databinding.FragmentTvshowBinding
-import com.amarydev.movieapp.presentation.Adapter
-import com.amarydev.movieapp.core.utils.Resource
 import com.amarydev.movieapp.ui.detail.DetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,7 +29,7 @@ class TvShowFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val favoriteAdapter = Adapter()
+        val favoriteAdapter = com.amarydev.presentation.Adapter()
         favoriteAdapter.onItemClickTv = {
             DetailActivity.ACTIVITY_FROM = "main"
             val detailActivity = TvShowFragmentDirections.actionNavigationFavoriteToDetailActivity(it.id, "tv", it.name, null, it)

@@ -27,6 +27,8 @@
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2828125" />
         <entry key="app/src/main/res/menu/menu_detail.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/menu/toolbar_menu.xml" value="0.34427083333333336" />
+        <entry key="presentation/src/main/res/layout/item_list.xml" value="0.33559782608695654" />
+        <entry key="presentation/src/main/res/layout/test.xml" value="0.33559782608695654" />
       </map>
     </option>
   </component>

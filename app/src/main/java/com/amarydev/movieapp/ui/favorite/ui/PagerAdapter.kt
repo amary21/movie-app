@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.amarydev.movieapp.ui.favorite.ui
 
 import android.content.Context

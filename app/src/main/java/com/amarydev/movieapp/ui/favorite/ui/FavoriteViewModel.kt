@@ -1,7 +1,7 @@
 package com.amarydev.movieapp.ui.favorite.ui
 
 import androidx.lifecycle.*
-import com.amarydev.movieapp.domain.usecase.UseCase
+import com.amarydev.domain.usecase.UseCase
 
 class FavoriteViewModel(useCase: UseCase) : ViewModel() {
 

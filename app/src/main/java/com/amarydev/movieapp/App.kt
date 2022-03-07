@@ -1,9 +1,9 @@
 package com.amarydev.movieapp
 
 import android.app.Application
-import com.amarydev.movieapp.core.di.databaseModule
-import com.amarydev.movieapp.core.di.networkModule
-import com.amarydev.movieapp.core.di.repositoryModule
+import com.amarydev.core.di.databaseModule
+import com.amarydev.core.di.networkModule
+import com.amarydev.core.di.repositoryModule
 import com.amarydev.movieapp.di.useCaseModule
 import com.amarydev.movieapp.di.viewModelModule
 import org.koin.android.ext.koin.androidContext

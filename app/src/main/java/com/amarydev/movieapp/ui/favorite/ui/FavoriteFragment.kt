@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.amarydev.movieapp.core.utils.Resource
+import com.amarydev.domain.utils.Resource
 import com.amarydev.movieapp.databinding.FragmentFavoriteBinding
-import com.amarydev.movieapp.presentation.Adapter
 import com.amarydev.movieapp.ui.detail.DetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -18,7 +17,7 @@ class FavoriteFragment : Fragment() {
     private val pageViewModel: FavoriteViewModel by viewModel()
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
-    private var favoriteAdapter: Adapter? = null
+    private var favoriteAdapter: com.amarydev.presentation.Adapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +30,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favoriteAdapter = Adapter()
+        favoriteAdapter = com.amarydev.presentation.Adapter()
         with(binding.rvFavorite) {
             layoutManager = GridLayoutManager(context, 2)
             setHasFixedSize(true)

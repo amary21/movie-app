@@ -3,10 +3,9 @@ package com.amarydev.movieapp.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.amarydev.movieapp.domain.repository.IRepository
-import com.amarydev.movieapp.domain.model.Movie
-import com.amarydev.movieapp.domain.model.Tv
-import com.amarydev.movieapp.domain.usecase.UseCase
+import com.amarydev.domain.model.Movie
+import com.amarydev.domain.model.Tv
+import com.amarydev.domain.usecase.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 

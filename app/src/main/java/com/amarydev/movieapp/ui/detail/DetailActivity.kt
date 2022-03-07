@@ -2,20 +2,19 @@ package com.amarydev.movieapp.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.amarydev.movieapp.R
-import com.amarydev.movieapp.domain.model.Genre
-import com.amarydev.movieapp.domain.model.Movie
-import com.amarydev.movieapp.domain.model.Production
-import com.amarydev.movieapp.domain.model.Tv
+import com.amarydev.domain.model.Genre
+import com.amarydev.domain.model.Movie
+import com.amarydev.domain.model.Production
+import com.amarydev.domain.model.Tv
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
-import com.amarydev.movieapp.core.utils.Constant
-import com.amarydev.movieapp.core.utils.Resource
+import com.amarydev.core.utils.Constant
+import com.amarydev.domain.utils.Resource
 import com.amarydev.movieapp.ui.favorite.FavoriteActivity
 import com.bumptech.glide.Glide
 import com.shashank.sony.fancytoastlib.FancyToast

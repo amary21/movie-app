@@ -1,7 +1,7 @@
 package com.amarydev.movieapp.di
 
-import com.amarydev.movieapp.domain.usecase.Interactor
-import com.amarydev.movieapp.domain.usecase.UseCase
+import com.amarydev.domain.usecase.Interactor
+import com.amarydev.domain.usecase.UseCase
 import com.amarydev.movieapp.ui.detail.DetailViewModel
 import com.amarydev.movieapp.ui.favorite.ui.FavoriteViewModel
 import com.amarydev.movieapp.ui.tvshow.TvShowViewModel

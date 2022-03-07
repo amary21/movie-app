@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.amarydev.domain.utils.Resource
 import com.amarydev.movieapp.databinding.FragmentMovieBinding
-import com.amarydev.movieapp.presentation.Adapter
-import com.amarydev.movieapp.core.utils.Resource
 import com.amarydev.movieapp.ui.detail.DetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -31,7 +30,7 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val homeAdapter = Adapter()
+        val homeAdapter = com.amarydev.presentation.Adapter()
         homeAdapter.onItemClickMovie = {
             DetailActivity.ACTIVITY_FROM = "main"
             val detailActivity = MovieFragmentDirections.actionNavigationHomeToDetailActivity(it.id, "movie", it.title, it, null)
