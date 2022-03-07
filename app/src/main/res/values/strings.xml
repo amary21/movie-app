@@ -14,4 +14,7 @@
     <string name="button_favorite">button favorite</string>
     <string name="image_not_found">image not found</string>
     <string name="data_not_found">Data Not Found</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="tab_text_1">Movie</string>
+    <string name="tab_text_2">Tv</string>
 </resources>

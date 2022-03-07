@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout-w1240dp/content_scrolling.xml" value="0.2362784471218206" />
         <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.27578125" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_favorite.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.353125" />
         <entry key="app/src/main/res/layout/error_not_found.xml" value="0.34148550724637683" />
@@ -25,6 +26,7 @@
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.36770833333333336" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2828125" />
         <entry key="app/src/main/res/menu/menu_detail.xml" value="0.36770833333333336" />
+        <entry key="app/src/main/res/menu/toolbar_menu.xml" value="0.34427083333333336" />
       </map>
     </option>
   </component>

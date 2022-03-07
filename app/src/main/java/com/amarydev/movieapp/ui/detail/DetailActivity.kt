@@ -1,6 +1,8 @@
 package com.amarydev.movieapp.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -14,12 +16,17 @@ import com.amarydev.movieapp.domain.model.Tv
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
 import com.amarydev.movieapp.core.utils.Constant
 import com.amarydev.movieapp.core.utils.Resource
+import com.amarydev.movieapp.ui.favorite.FavoriteActivity
 import com.bumptech.glide.Glide
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
+
+    companion object{
+        var ACTIVITY_FROM = ""
+    }
 
     private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityDetailBinding
@@ -31,18 +38,33 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        id = DetailActivityArgs.fromBundle(intent.extras as Bundle).id
-        type = DetailActivityArgs.fromBundle(intent.extras as Bundle).type
-        title = DetailActivityArgs.fromBundle(intent.extras as Bundle).title
-        movie = DetailActivityArgs.fromBundle(intent.extras as Bundle).movie
-        tv = DetailActivityArgs.fromBundle(intent.extras as Bundle).tv
+        if (ACTIVITY_FROM == "main"){
+            id = DetailActivityArgs.fromBundle(intent.extras as Bundle).id
+            type = DetailActivityArgs.fromBundle(intent.extras as Bundle).type
+            title = DetailActivityArgs.fromBundle(intent.extras as Bundle).title
+            movie = DetailActivityArgs.fromBundle(intent.extras as Bundle).movie
+            tv = DetailActivityArgs.fromBundle(intent.extras as Bundle).tv
+        } else {
+            id = intent.getIntExtra("id", 0)
+            type = intent.getStringExtra("type").toString()
+            title = intent.getStringExtra("title").toString()
+            movie = intent.getParcelableExtra("movie")
+            tv = intent.getParcelableExtra("tv")
+        }
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         onViewActionBar()
         onViewCreate()
         onViewFavorite()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (ACTIVITY_FROM == "favorite"){
+            startActivity(Intent(this, FavoriteActivity::class.java))
+            finish()
+        }
     }
 
     private fun onViewActionBar() {
@@ -164,6 +186,8 @@ class DetailActivity : AppCompatActivity() {
 
         }
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home){

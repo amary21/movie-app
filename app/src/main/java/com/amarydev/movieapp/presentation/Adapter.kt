@@ -1,4 +1,4 @@
-package com.amarydev.movieapp.utils
+package com.amarydev.movieapp.presentation
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -35,7 +35,7 @@ class Adapter : RecyclerView.Adapter<Adapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false))
 
-    override fun onBindViewHolder(holder: Adapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (!movies.isNullOrEmpty()) {
             val data = movies[position]
             holder.bindMovie(data)
