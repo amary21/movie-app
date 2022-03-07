@@ -1,13 +1,10 @@
-package com.amarydev.movieapp.ui.favorite
+package com.amarydev.movieapp.favorite
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.amarydev.movieapp.databinding.ActivityFavoriteBinding
-import com.amarydev.movieapp.ui.favorite.ui.SectionsPagerAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import com.amarydev.movieapp.favorite.databinding.ActivityFavoriteBinding
+import com.amarydev.movieapp.favorite.ui.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 class FavoriteActivity : AppCompatActivity() {

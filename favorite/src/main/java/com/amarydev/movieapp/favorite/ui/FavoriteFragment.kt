@@ -1,4 +1,4 @@
-package com.amarydev.movieapp.ui.favorite.ui
+package com.amarydev.movieapp.favorite.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.amarydev.domain.utils.Resource
-import com.amarydev.movieapp.databinding.FragmentFavoriteBinding
+import com.amarydev.movieapp.favorite.databinding.FragmentFavoriteBinding
+import com.amarydev.movieapp.favorite.di.favoriteModule
 import com.amarydev.movieapp.ui.detail.DetailActivity
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
+import org.koin.core.context.unloadKoinModules
 
 class FavoriteFragment : Fragment() {
 
@@ -23,6 +26,7 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        loadKoinModules(favoriteModule)
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,7 +61,7 @@ class FavoriteFragment : Fragment() {
                         it.data?.let { movies -> favoriteAdapter?.setDataMovie(movies) }
                         favoriteAdapter?.onItemClickMovie = { movie ->
                             DetailActivity.ACTIVITY_FROM = "favorite"
-                            val intent = Intent(requireContext(), DetailActivity::class.java)
+                            val intent = Intent(requireContext(), Class.forName("com.amarydev.movieapp.ui.detail.DetailActivity"))
                             intent.putExtra("id", movie.id)
                             intent.putExtra("type", "movie")
                             intent.putExtra("title", movie.title)
@@ -89,7 +93,7 @@ class FavoriteFragment : Fragment() {
                         it.data?.let { movies -> favoriteAdapter?.setDataTv(movies) }
                         favoriteAdapter?.onItemClickTv = { tv ->
                             DetailActivity.ACTIVITY_FROM = "favorite"
-                            val intent = Intent(requireContext(), DetailActivity::class.java)
+                            val intent = Intent(requireContext(), Class.forName("com.amarydev.movieapp.ui.detail.DetailActivity"))
                             intent.putExtra("id", tv.id)
                             intent.putExtra("type", "tv")
                             intent.putExtra("title", tv.name)
@@ -135,6 +139,7 @@ class FavoriteFragment : Fragment() {
         binding.rvFavorite.adapter = null
         favoriteAdapter = null
         _binding = null
+        unloadKoinModules(favoriteModule)
         super.onDestroyView()
 
     }

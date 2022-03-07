@@ -1,4 +1,4 @@
-package com.amarydev.movieapp.ui.favorite.ui
+package com.amarydev.movieapp.favorite.ui
 
 import androidx.lifecycle.*
 import com.amarydev.domain.usecase.UseCase

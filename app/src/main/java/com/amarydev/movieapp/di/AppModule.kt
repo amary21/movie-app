@@ -3,7 +3,6 @@ package com.amarydev.movieapp.di
 import com.amarydev.domain.usecase.Interactor
 import com.amarydev.domain.usecase.UseCase
 import com.amarydev.movieapp.ui.detail.DetailViewModel
-import com.amarydev.movieapp.ui.favorite.ui.FavoriteViewModel
 import com.amarydev.movieapp.ui.tvshow.TvShowViewModel
 import com.amarydev.movieapp.ui.movie.MovieViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,5 +20,4 @@ val viewModelModule = module {
     viewModel { MovieViewModel(get()) }
     viewModel { TvShowViewModel(get()) }
     viewModel { DetailViewModel(get(), get()) }
-    viewModel { FavoriteViewModel(get()) }
 }

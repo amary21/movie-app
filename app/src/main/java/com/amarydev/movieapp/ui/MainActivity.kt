@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -12,7 +13,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.amarydev.movieapp.R
 import com.amarydev.movieapp.databinding.ActivityMainBinding
-import com.amarydev.movieapp.ui.favorite.FavoriteActivity
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,7 +48,23 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.navigation_favorite -> {
-                startActivity(Intent(this, FavoriteActivity::class.java))
+                val splitInstallManager = SplitInstallManagerFactory.create(this)
+                val moduleFavorite = "favorite"
+                if (splitInstallManager.installedModules.contains(moduleFavorite)){
+                    startActivity(Intent(this, Class.forName("com.amarydev.movieapp.favorite.FavoriteActivity")))
+                } else {
+                    val request = SplitInstallRequest.newBuilder()
+                        .addModule(moduleFavorite)
+                        .build()
+
+                    splitInstallManager.startInstall(request)
+                        .addOnCompleteListener {
+                            Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
+                        }
+                }
             }
         }
         return super.onOptionsItemSelected(item)

@@ -15,7 +15,6 @@ import com.amarydev.domain.model.Tv
 import com.amarydev.movieapp.databinding.ActivityDetailBinding
 import com.amarydev.core.utils.Constant
 import com.amarydev.domain.utils.Resource
-import com.amarydev.movieapp.ui.favorite.FavoriteActivity
 import com.bumptech.glide.Glide
 import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_detail.*
@@ -61,7 +60,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         if (ACTIVITY_FROM == "favorite"){
-            startActivity(Intent(this, FavoriteActivity::class.java))
+            startActivity(Intent(this, Class.forName("com.amarydev.movieapp.favorite.FavoriteActivity")))
             finish()
         }
     }
