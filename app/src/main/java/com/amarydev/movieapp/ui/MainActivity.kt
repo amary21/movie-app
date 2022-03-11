@@ -48,25 +48,35 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.navigation_favorite -> {
-                val splitInstallManager = SplitInstallManagerFactory.create(this)
-                val moduleFavorite = "favorite"
-                if (splitInstallManager.installedModules.contains(moduleFavorite)){
-                    startActivity(Intent(this, Class.forName("com.amarydev.movieapp.favorite.FavoriteActivity")))
-                } else {
-                    val request = SplitInstallRequest.newBuilder()
-                        .addModule(moduleFavorite)
-                        .build()
+                installFavoriteModule()
 
-                    splitInstallManager.startInstall(request)
-                        .addOnCompleteListener {
-                            Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
-                        }
-                }
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun installFavoriteModule() {
+        val splitInstallManager = SplitInstallManagerFactory.create(this)
+        val moduleFavorite = "favorite"
+        if (splitInstallManager.installedModules.contains(moduleFavorite)){
+            moveActivity()
+        } else {
+            val request = SplitInstallRequest.newBuilder()
+                .addModule(moduleFavorite)
+                .build()
+
+            splitInstallManager.startInstall(request)
+                .addOnCompleteListener {
+                    moveActivity()
+                    Toast.makeText(this, "Success installing module", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error installing module", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun moveActivity() {
+        startActivity(Intent(this, Class.forName("com.amarydev.movieapp.favorite.FavoriteActivity")))
     }
 }
