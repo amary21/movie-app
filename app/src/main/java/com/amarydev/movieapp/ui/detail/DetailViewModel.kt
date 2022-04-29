@@ -3,21 +3,23 @@ package com.amarydev.movieapp.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.amarydev.movieapp.data.IRepository
-import com.amarydev.movieapp.data.model.Movie
+import com.amarydev.movieapp.domain.repository.IRepository
+import com.amarydev.movieapp.domain.model.Movie
+import com.amarydev.movieapp.domain.model.Tv
+import com.amarydev.movieapp.domain.usecase.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    private val iRepository: IRepository,
+    private val useCase: UseCase,
     private val coroutineDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    fun movie(id: Int) = iRepository.getDetailMovie(id).asLiveData()
+    fun detail(type:String, id: Int) = useCase.getDetail(type, id).asLiveData()
 
-    fun isFavorite(id: Int) = iRepository.isFavorite(id).asLiveData()
+    fun isFavorite(id: Int, type: String) = useCase.isFavorite(id, type).asLiveData()
 
-    fun setFavorite(movie: Movie, state: Boolean) = viewModelScope.launch(coroutineDispatcher){
-        iRepository.setFavorite(movie, state)
+    fun setFavorite(movie: Movie? = null, tv: Tv? = null, state: Boolean) = viewModelScope.launch(coroutineDispatcher){
+        useCase.setFavorite(movie, tv, state)
     }
 }

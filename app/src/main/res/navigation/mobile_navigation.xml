@@ -2,22 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_movie">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.amarydev.movieapp.ui.home.HomeFragment"
+        android:id="@+id/navigation_movie"
+        android:name="com.amarydev.movieapp.ui.movie.MovieFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_movie" >
         <action
             android:id="@+id/action_navigation_home_to_detailActivity"
             app:destination="@id/detailActivity" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_favorite"
-        android:name="com.amarydev.movieapp.ui.favorite.FavoriteFragment"
+        android:id="@+id/navigation_tv"
+        android:name="com.amarydev.movieapp.ui.tvshow.TvShowFragment"
         android:label="@string/title_favorite"
-        tools:layout="@layout/fragment_favorite" >
+        tools:layout="@layout/fragment_tvshow" >
         <action
             android:id="@+id/action_navigation_favorite_to_detailActivity"
             app:destination="@id/detailActivity" />
@@ -28,8 +28,22 @@
         android:label="activity_detail"
         tools:layout="@layout/activity_detail" >
         <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
             android:name="movie"
-            app:argType="com.amarydev.movieapp.data.model.Movie" />
+            app:argType="com.amarydev.movieapp.domain.model.Movie"
+            app:nullable="true" />
+        <argument
+            android:name="tv"
+            app:argType="com.amarydev.movieapp.domain.model.Tv"
+            app:nullable="true" />
     </activity>
 
 </navigation>
